@@ -1,0 +1,66 @@
+﻿@model DogGo.Models.ViewModels.ProfileViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+<div>
+    <h1 class="mb-4">@Model.Walker.Name</h1>
+
+    <section class="container">
+        <img style="width:100px;float:left;margin-right:20px"
+             src= @Model.Walker.ImageUrl />
+        <div>
+            <label class="font-weight-bold">Name:</label>
+            <span>@Model.Walker.Name</span>
+        </div>
+        <div>
+            <label class="font-weight-bold">Neighborhood:</label>
+            <span>@Model.Walker.Neighborhood.Name</span>
+        </div>
+    </section>
+
+    <hr class="mt-5" />
+    <div class="clearfix"></div>
+
+    <div class="container">
+        <div class="row">
+        <div class="col-sm">
+            <h1 class="text-left">Recent Walks</h1>
+            <div class="column">
+
+                    @{
+                        int walkerId = Model.Walker.Id;
+                        var walkerWalks = Model.Walks.Where(walk => walk.WalkerId == walkerId).ToList();
+                    }
+
+                    <p>Number of walks for the walker: @walkerWalks.Count</p>
+
+                @foreach (Walk walk in Model.Walks)
+                {
+                  <div>
+                        <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Client</th>
+                                            <th scope="col">Duration</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>@walk.Date</td>
+                                            <td>@walk.Dog.Name</td>
+                                            <td>@walk.FormattedDuration</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+         
+                }
+            </div>
+        </div>
+      </div>
+    </>
+</div>
